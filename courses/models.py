@@ -16,6 +16,7 @@ class Сourses(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE,null=False, blank=False)
     name_of_the_institution = models.CharField(max_length=255, null=False, blank=False)
     name = models.CharField(max_length=255, null=False, blank=False)
+    image = models.ImageField(default='default.jpg', upload_to='post_image/')
     price = models.IntegerField( null=False, blank=False)
     description = models.CharField(max_length=255, null=False, blank=False)
     created_date = models.DateTimeField(default=datetime.datetime.now())
