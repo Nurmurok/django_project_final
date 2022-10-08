@@ -62,7 +62,7 @@ class GetCartAPIView(APIView):
 
 
 class CategoryCreateApiView(APIView):
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.AllowAny]
 
     def post(self, request):
         serializers = CategorySerializer(data=request.data)
