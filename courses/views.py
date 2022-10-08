@@ -95,7 +95,7 @@ class FilterByCategory(APIView):
 
 
 class FilterByPrice(APIView):
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.AllowAny]
     parser_classes = [JSONParser]
 
     def get_object(self, name):
