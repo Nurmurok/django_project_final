@@ -46,14 +46,13 @@ class RegisterAPIView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class UserListView(APIView):
-    permission_classes = [permissions.AllowAny]
-
-    def get(self, request):
-        accounts = Account.objects.all()
-        serializer = UserSerializer(accounts, many=True)
-        return Response(serializer.data)
-
+class UserListApiView(APIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['username']
+    filter_backends = [filters.OrderingFilter]
+    ordering_fields = ['username', 'id']
 
 class UserDetailApiView(APIView):
     permission_classes = [permissions.IsAuthenticated]
