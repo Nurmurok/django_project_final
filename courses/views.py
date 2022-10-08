@@ -52,7 +52,7 @@ class GetCartAPIView(APIView):
         return Response(data)
 
     def put(self, requests, id):
-        cart = self.get_object(id)
+        cart = self.get(id)
         serializer = UpdateSerializer(cart, data=requests.data)
         if serializer.is_valid():
             serializer.save()
