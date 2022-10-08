@@ -1,7 +1,7 @@
 from django.http import Http404
 from rest_framework.parsers import JSONParser
 from rest_framework.response import Response
-
+from rest_framework import filters
 from account.permissions import IsVendor
 from .models import Сourses, Cart, Category
 from rest_framework.views import APIView
@@ -91,3 +91,11 @@ class FilterByCategory(APIView):
         data['products'] = serializer2.data
 
         return Response(data)
+
+
+class FilterByPrice(APIView):
+    permission_classes = [permissions.AllowAny]
+    def get(self, request):
+        if request.query_params.get('price'):
+            return ['price']
+        return super().get(request)
