@@ -7,7 +7,7 @@ from .models import Сourses, Category, Cart
 class СoursesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Сourses
-        fields = ['id','user', 'category','name_of_the_institution', 'name', 'image', 'description', 'price', 'created_date', 'website', 'adress']
+        fields = ['id','user', 'category','name_of_the_institution', 'name', 'image', 'description', 'price', 'created_date', 'website','job_openings', 'adress']
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
