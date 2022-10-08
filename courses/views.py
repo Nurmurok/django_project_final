@@ -94,7 +94,7 @@ class FilterByCategory(APIView):
         return Response(data)
 
 
-class FilterByPrice(APIView):
+class FilterCategoryByPrice(APIView):
     permission_classes = [permissions.AllowAny]
     parser_classes = [JSONParser]
 
@@ -113,3 +113,15 @@ class FilterByPrice(APIView):
         data['courses'] = serializer2.data
 
         return Response(data)
+
+
+class FilterPrice(APIView):
+    permission_classes = [permissions.AllowAny]
+    parser_classes = [JSONParser]
+
+    def get(self, request, price):
+
+        courses = Сourses.objects.filter(price__gte=int(price))
+        serializer2 = СoursesSerializer(courses, many=True)
+        data = serializer2.data
+        data['courses'] = serializer2.data
