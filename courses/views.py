@@ -1,13 +1,13 @@
 from django.http import Http404
 from rest_framework.parsers import JSONParser
 from rest_framework.response import Response
-from rest_framework import filters
+from rest_framework import filters, generics
 from account.permissions import IsVendor
 from .models import Сourses, Cart, Category
 from rest_framework.views import APIView
 from .serializers import СoursesSerializer, CartSerializer,UpdateSerializer, CategorySerializer
 from rest_framework import permissions, status
-
+from django_filters.rest_framework import DjangoFilterBackend
 
 
 class СoursesListApiView(APIView):
@@ -93,9 +93,11 @@ class FilterByCategory(APIView):
         return Response(data)
 
 
-class FilterByPrice(APIView):
-    permission_classes = [permissions.AllowAny]
-    def get(self, request):
-        if request.query_params.get('price'):
-            return ['price']
-        return super().get(request)
+
+
+
+class СoursesListAPIView(generics.ListAPIView):
+    queryset = Сourses.objects.all()
+    serializer_class = СoursesSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['category', 'price']
