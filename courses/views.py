@@ -31,6 +31,7 @@ class CategoryListApiView(APIView):
 class CoursesCreateAPIView(APIView):
     # permission_classes = [IsVendor]
     permission_classes = [permissions.AllowAny]
+    serializer_class=СoursesSerializer
     def post(self, request):
         serializers = СoursesSerializer(data=request.data)
         if serializers.is_valid():
