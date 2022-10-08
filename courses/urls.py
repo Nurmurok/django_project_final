@@ -11,8 +11,8 @@ urlpatterns = [
     path('cart/<int:id>', GetCartAPIView.as_view(), name='cart'),
     path('create/', CoursesCreateAPIView.as_view(), name='create'),
     path('cat_create/', CategoryCreateApiView.as_view(), name='cat_create'),
-    path('filterByCategory/<slug:name>/', FilterByCategory.as_view(), name='filter'),
-    path('filterByPrice/<slug:name>/<int:price>', FilterByPrice.as_view(), name='filter_price'),
+    path('filter/<slug:name>/', FilterByCategory.as_view(), name='filter'),
+    path('filter/<slug:name>/<int:price>', FilterByPrice.as_view(), name='filter_price'),
 
 
 ]
