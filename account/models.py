@@ -5,7 +5,6 @@ from django.db import models
 class Account(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    phone = models.CharField(max_length=255, null=False, blank=False)
     is_vendor = models.BooleanField(default=False, null=True, blank=True)
 
     def __str__(self):

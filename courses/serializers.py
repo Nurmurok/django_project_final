@@ -5,9 +5,13 @@ from .models import Сourses, Category, Cart
 
 
 class СoursesSerializer(serializers.ModelSerializer):
+    type = serializers.ChoiceField(
+        choices=((True, "online"),
+                 (False, "offline"))
+    )
     class Meta:
         model = Сourses
-        fields = ['id','user', 'category','name_of_the_institution', 'name', 'image', 'description', 'price', 'created_date', 'website','job_openings', 'adress']
+        fields = ['id','user', 'category','company','name', 'type','image', 'description', 'price', 'created_date', 'website','job_openings', 'adress']
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:

@@ -14,7 +14,8 @@ class Category(models.Model):
 class Сourses(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE,null=False, blank=False)
     category = models.ForeignKey(Category, on_delete=models.CASCADE,null=False, blank=False)
-    name_of_the_institution = models.CharField(max_length=255, null=False, blank=False)
+    company = models.CharField(max_length=255, null=False, blank=False)
+    type = models.BooleanField(default=False, null=True, blank=True)
     name = models.CharField(max_length=255, null=False, blank=False)
     image = models.ImageField(default='default.jpg', upload_to='post_image/')
     price = models.IntegerField( null=False, blank=False)
@@ -23,6 +24,7 @@ class Сourses(models.Model):
     website = models.URLField(max_length=255, null=False, blank=False)
     job_openings = models.CharField(max_length=255, null=True, blank=True)
     adress = models.URLField(max_length=255, null=False, blank=False)
+
 
 
 

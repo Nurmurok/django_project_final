@@ -44,9 +44,10 @@ class RegisterSerializer(serializers.ModelSerializer):
 
 
 
+
     class Meta:
         model = Account
-        fields = ['email', 'username', 'phone', 'is_vendor', 'password', 'password2']
+        fields = ['email', 'username', 'is_vendor', 'password', 'password2']
 
     def validate(self, attrs):
         if attrs['password'] != attrs['password2']:
@@ -65,4 +66,4 @@ class UpdateSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'username', 'email']
+        fields = ['id', 'username', 'email', 'is_vendor']
