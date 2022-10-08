@@ -94,9 +94,9 @@ class FilterByCategory(APIView):
 
 
 
+class СoursesListAPIView(APIView):
+    permission_classes = [permissions.AllowAny]
 
-
-class СoursesListAPIView(generics.ListAPIView):
     queryset = Сourses.objects.all()
     serializer_class = СoursesSerializer
     filter_backends = [DjangoFilterBackend]
