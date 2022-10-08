@@ -1,4 +1,4 @@
-
+from django.http import Http404
 from rest_framework.parsers import JSONParser
 from rest_framework.response import Response
 
@@ -70,3 +70,24 @@ class CategoryCreateApiView(APIView):
            serializers.save()
            return Response(serializers.data, status=status.HTTP_201_CREATED)
         return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class FilterByCategory(APIView):
+    permission_classes = [permissions.AllowAny]
+    parser_classes = [JSONParser]
+
+    def get_object(self, name):
+        try:
+            return Category.objects.get(name=name)
+        except Category.DoesNotExist:
+            raise Http404
+
+    def get(self, request, name):
+        category = self.get_object(name)
+        product = Сourses.objects.filter(category__name=name)
+        serializer = CategorySerializer(category)
+        serializer2 = СoursesSerializer(product, many=True)
+        data = serializer.data
+        data['products'] = serializer2.data
+
+        return Response(data)

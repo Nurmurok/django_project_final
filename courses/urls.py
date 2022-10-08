@@ -1,7 +1,8 @@
 from django.urls import path
 
-from .views import (СoursesListApiView, GetCartAPIView,CoursesCreateAPIView,CategoryListApiView,CategoryCreateApiView
-)
+from .views import (СoursesListApiView, GetCartAPIView, CoursesCreateAPIView, CategoryListApiView,
+                    CategoryCreateApiView, FilterByCategory
+                    )
 
 
 urlpatterns = [
@@ -10,4 +11,5 @@ urlpatterns = [
     path('cart/<int:id>', GetCartAPIView.as_view(), name='cart'),
     path('create/', CoursesCreateAPIView.as_view(), name='create'),
     path('cat_create/', CategoryCreateApiView.as_view(), name='cat_create'),
+    path('filterByCategory/<slug:name>/', FilterByCategory.as_view(), name='filter'),
 ]
