@@ -51,8 +51,14 @@ class GetCartAPIView(APIView):
         data['courses'] = serializer2.data
         return Response(data)
 
+    def get_object(self, id):
+        try:
+            return Cart.objects.get(id=id)
+        except Cart.DoesNotExist:
+            raise Http404
+
     def put(self, requests, id):
-        cart = self.get(id)
+        cart = self.get_object(id)
         serializer = UpdateSerializer(cart, data=requests.data)
         if serializer.is_valid():
             serializer.save()
