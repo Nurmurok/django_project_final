@@ -3,7 +3,6 @@ from django.db import models
 
 
 class Account(models.Model):
-
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     is_vendor = models.BooleanField(default=False, null=True, blank=True)
 
