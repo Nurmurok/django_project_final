@@ -24,10 +24,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-m#q#5yj092ynkx-lzt&rshrfe8vb=qtn24s6pn#$2io9%k)kg1"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-DEBUG = False
-ALLOWED_HOSTS = ['https://aggregatorcourses.herokuapp.com/ ', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS=[]
+# ALLOWED_HOSTS = ['https://aggregatorcourses.herokuapp.com/ ', 'localhost', '127.0.0.1']
 
 CORS_ALLOWED_ORIGINS = [
     "https://example.com", # прописать ссылку его домена

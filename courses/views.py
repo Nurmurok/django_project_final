@@ -7,7 +7,7 @@ from .models import Сourses, Cart, Category
 from rest_framework.views import APIView
 from .serializers import СoursesSerializer, CartSerializer,UpdateSerializer, CategorySerializer
 from rest_framework import permissions, status
-# from account.permissions import IsVendor
+
 
 
 class СoursesListApiView(APIView):

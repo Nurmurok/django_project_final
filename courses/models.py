@@ -21,8 +21,9 @@ class Сourses(models.Model):
     description = models.CharField(max_length=255, null=False, blank=False)
     created_date = models.DateTimeField(default=datetime.datetime.now())
     website = models.URLField(max_length=255, null=False, blank=False)
-    job_openings = models.CharField(max_length=255, null=False, blank=False)
+    job_openings = models.CharField(max_length=255, null=True, blank=True)
     adress = models.URLField(max_length=255, null=False, blank=False)
+
 
 
 
