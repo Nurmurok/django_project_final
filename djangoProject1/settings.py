@@ -135,6 +135,9 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 3
 
 }
+CSRF_TRUSTED_ORIGINS = [
+    'https://appname.herokuapp.com'
+]
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(hours=2),
