@@ -1,7 +1,7 @@
 from django.urls import path
 
 from .views import (СoursesListApiView, GetCartAPIView, CoursesCreateAPIView, CategoryListApiView,
-                    CategoryCreateApiView, FilterByCategory,СoursesListAPIView
+                    CategoryCreateApiView, FilterByCategory,FilterByPrice
                     )
 
 
@@ -12,7 +12,7 @@ urlpatterns = [
     path('create/', CoursesCreateAPIView.as_view(), name='create'),
     path('cat_create/', CategoryCreateApiView.as_view(), name='cat_create'),
     path('filterByCategory/<slug:name>/', FilterByCategory.as_view(), name='filter'),
-    path('search/', СoursesListAPIView.as_view(), name='filter'),
+    path('filterByPrice/<slug:name>/<int:price>', FilterByPrice.as_view(), name='filter_price'),
 
 
 ]

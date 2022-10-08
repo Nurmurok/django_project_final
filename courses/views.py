@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.http import Http404
 from rest_framework.parsers import JSONParser
 from rest_framework.response import Response
@@ -84,20 +85,31 @@ class FilterByCategory(APIView):
 
     def get(self, request, name):
         category = self.get_object(name)
-        product = Сourses.objects.filter(category__name=name)
+        courses = Сourses.objects.filter(category__name=name)
         serializer = CategorySerializer(category)
-        serializer2 = СoursesSerializer(product, many=True)
+        serializer2 = СoursesSerializer(courses, many=True)
         data = serializer.data
-        data['products'] = serializer2.data
+        data['courses'] = serializer2.data
 
         return Response(data)
 
 
+class FilterByPrice(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+    parser_classes = [JSONParser]
 
-class СoursesListAPIView(APIView):
-    permission_classes = [permissions.AllowAny]
+    def get_object(self, name):
+        try:
+            return Category.objects.get(name=name)
+        except Category.DoesNotExist:
+            raise Http404
 
-    queryset = Сourses.objects.all()
-    serializer_class = СoursesSerializer
-    filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['category', 'price']
+    def get(self, request, name, price):
+        category = self.get_object(name)
+        courses = Сourses.objects.filter(Q(category__name=name) & Q(price__gte=int(price)))
+        serializer = CategorySerializer(category)
+        serializer2 = СoursesSerializer(courses, many=True)
+        data = serializer.data
+        data['courses'] = serializer2.data
+
+        return Response(data)
