@@ -43,12 +43,12 @@ class GetCartAPIView(APIView):
     permission_classes = [permissions.AllowAny]
     parser_classes = [JSONParser]
     def get(self,request,id):
-        cart=Cart.objects.get(user_id=id)
-        product=cart.product.all()
-        serializer2=СoursesSerializer(product, many=True)
-        serializer=CartSerializer(cart)
-        data=serializer.data
-        data['courses']=serializer2.data
+        cart = Cart.objects.get(user_id=id)
+        courses = cart.courses.all()
+        serializer2 = СoursesSerializer(courses, many=True)
+        serializer = CartSerializer(cart)
+        data = serializer.data
+        data['courses'] = serializer2.data
         return Response(data)
 
     def put(self, requests, id):
