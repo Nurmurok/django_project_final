@@ -57,11 +57,15 @@ class UserListView(APIView):
 
     def get(self, request):
         user = User.objects.all()
+        count = user.count()
         paginator = Paginator(user, 1)
         page_num = self.request.query_params.get('page', 1)
 
         serializers = UserSerializer(paginator.page(page_num), many=True)
-        return Response(serializers.data)
+        return Response({
+            "count": count,
+            "user": serializers.data
+        })
 
 class UserDetailApiView(APIView):
     permission_classes = [permissions.AllowAny]
