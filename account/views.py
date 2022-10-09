@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.core.paginator import Paginator
 from django.http import Http404
 from rest_framework import permissions
 from django.shortcuts import render
@@ -49,11 +50,18 @@ class RegisterAPIView(APIView):
 class UserListView(APIView):
     permission_classes = [permissions.AllowAny]
 
-    def get(self, request):
-        users = User.objects.all()
-        serializer = UserSerializer(users, many=True)
-        return Response(serializer.data)
+    # def get(self, request):
+    #     users = User.objects.all()
+    #     serializer = UserSerializer(users, many=True)
+    #     return Response(serializer.data)
 
+    def get(self, request):
+        courses = User.objects.all()
+        paginator = Paginator(courses, 5)
+        page_num = self.request.query_params.get('page')
+
+        serializers = UserSerializer(paginator.page(page_num), many=True)
+        return Response(serializers.data)
 
 class UserDetailApiView(APIView):
     permission_classes = [permissions.AllowAny]
