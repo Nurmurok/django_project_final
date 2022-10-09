@@ -8,16 +8,26 @@ from .models import Сourses, Cart, Category
 from rest_framework.views import APIView
 from .serializers import СoursesSerializer, CartSerializer, UpdateSerializer, CategorySerializer
 from rest_framework import permissions, status
+from django.core.paginator import Paginator
 from django_filters.rest_framework import DjangoFilterBackend
 
 
 class СoursesListApiView(APIView):
     permission_classes = [permissions.AllowAny]
 
-    def get(self,request):
-        products=Сourses.objects.all()
-        serializer = СoursesSerializer(products, many=True)
-        return Response(serializer.data)
+    # def get(self,request):
+    #     products=Сourses.objects.all()
+    #     serializer = СoursesSerializer(products, many=True)
+    #     return Response(serializer.data)
+
+
+    def get(self,  request):
+        courses = Сourses.objects.all()
+        paginator = Paginator(courses, 5)
+        page_num = self.request.query_params.get('page')
+        print(page_num)
+        serializers = СoursesSerializer(paginator.page(page_num), many=True)
+        return Response(serializers.data)
 
 
 class CategoryListApiView(APIView):
@@ -27,6 +37,7 @@ class CategoryListApiView(APIView):
         category=Category.objects.all()
         serializer = CategorySerializer(category, many=True)
         return Response(serializer.data)
+
 
 class CoursesCreateAPIView(APIView):
     # permission_classes = [IsVendor]
