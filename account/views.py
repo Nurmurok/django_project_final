@@ -46,17 +46,18 @@ class RegisterAPIView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class UserListApiView(APIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-    filter_backends = [filters.SearchFilter]
-    search_fields = ['username']
-    filter_backends = [filters.OrderingFilter]
-    ordering_fields = ['username', 'id']
+class UserListView(APIView):
+    permission_classes = [permissions.AllowAny]
+
+    def get(self, request):
+        users = User.objects.all()
+        serializer = UserSerializer(users, many=True)
+        return Response(serializer.data)
+
 
 class UserDetailApiView(APIView):
-    permission_classes = [permissions.IsAuthenticated]
-    parser_classes = [JSONParser]
+    permission_classes = [permissions.AllowAny]
+    # parser_classes = [JSONParser]
 
     def get_object(self, id):
         try:
@@ -66,12 +67,12 @@ class UserDetailApiView(APIView):
 
     def get(self, request, id):
         user = self.get_object(id)
-        posts = Сourses.objects.filter(author_id=id)
+        courses = Сourses.objects.filter(user_id=id)
         serializer = UserSerializer(user)
-        serializer2 = СoursesSerializer(posts, many=True)
+        serializer2 = СoursesSerializer(courses, many=True)
         data = serializer.data
         data['courses'] = serializer2.data
-        data['quantity_of_courses'] = posts.count()
+        data['quantity_of_courses'] = courses.count()
         return Response(data)
 
 
