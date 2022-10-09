@@ -56,8 +56,8 @@ class UserListView(APIView):
     #     return Response(serializer.data)
 
     def get(self, request):
-        courses = User.objects.all()
-        paginator = Paginator(courses, 5)
+        user = User.objects.all()
+        paginator = Paginator(user, 5)
         page_num = self.request.query_params.get('page')
 
         serializers = UserSerializer(paginator.page(page_num), many=True)
