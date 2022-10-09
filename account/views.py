@@ -50,18 +50,18 @@ class RegisterAPIView(APIView):
 class UserListView(APIView):
     permission_classes = [permissions.AllowAny]
 
-    # def get(self, request):
-    #     users = User.objects.all()
-    #     serializer = UserSerializer(users, many=True)
-    #     return Response(serializer.data)
-
     def get(self, request):
-        user = User.objects.all()
-        paginator = Paginator(user, 5)
-        page_num = self.request.query_params.get('page')
+        users = User.objects.all()
+        serializer = UserSerializer(users, many=True)
+        return Response(serializer.data)
 
-        serializers = UserSerializer(paginator.page(page_num), many=True)
-        return Response(serializers.data)
+    # def get(self, request):
+    #     user = User.objects.all()
+    #     paginator = Paginator(user, 5)
+    #     page_num = self.request.query_params.get('page')
+    #
+    #     serializers = UserSerializer(paginator.page(page_num), many=True)
+    #     return Response(serializers.data)
 
 class UserDetailApiView(APIView):
     permission_classes = [permissions.AllowAny]
