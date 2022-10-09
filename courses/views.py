@@ -25,7 +25,7 @@ class СoursesListApiView(APIView):
         courses = Сourses.objects.all()
         paginator = Paginator(courses, 5)
         page_num = self.request.query_params.get('page')
-        print(page_num)
+
         serializers = СoursesSerializer(paginator.page(page_num), many=True)
         return Response(serializers.data)
 
