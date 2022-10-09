@@ -34,9 +34,14 @@ CORS_ALLOWED_ORIGINS = [
     "https://sub.example.com",
     "http://localhost:3000",
     "http://127.0.0.1:3000",
-    'https://mangofinalgroup.herokuapp.com'
+    'https://mangofinalgroup.herokuapp.com',
 ]
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://mangofinalgroup.herokuapp.com',
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+]
 
 CORS_ALLOW_METHODS = [
     "DELETE",
