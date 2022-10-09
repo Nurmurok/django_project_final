@@ -28,7 +28,7 @@ class CartSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Cart
-        fields = ['id', 'user', 'courses']
+        fields = ['user', 'courses']
 
 
 class UpdateSerializer(serializers.ModelSerializer):

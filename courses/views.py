@@ -6,7 +6,7 @@ from rest_framework import filters, generics
 from account.permissions import IsVendor
 from .models import Сourses, Cart, Category
 from rest_framework.views import APIView
-from .serializers import СoursesSerializer, CartSerializer,UpdateSerializer, CategorySerializer
+from .serializers import СoursesSerializer, CartSerializer, UpdateSerializer, CategorySerializer
 from rest_framework import permissions, status
 from django_filters.rest_framework import DjangoFilterBackend
 
@@ -52,20 +52,13 @@ class GetCartAPIView(APIView):
         data['courses'] = serializer2.data
         return Response(data)
 
-    def get_object(self, id):
-        try:
-            return Cart.objects.get(id=id)
-        except Cart.DoesNotExist:
-            raise Http404
-
-    def put(self, requests, id):
+    def put(self, requests,id):
         cart = self.get_object(id)
         serializer = UpdateSerializer(cart, data=requests.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
 
 
 
@@ -131,4 +124,28 @@ class FilterPrice(APIView):
         courses = Сourses.objects.filter(price__gte=int(price))
         serializer2 = СoursesSerializer(courses, many=True)
         data = serializer2.data
-        data['courses'] = serializer2.data
+        # data['courses'] = serializer2.data
+
+        return Response(data)
+
+
+class CreateCourseAPIView(APIView):
+    def post(self, request):
+        if request.data.get('course'):
+            Cart.objects.get(user=request.user).courses.add(
+                Сourses.objects.get(pk=request.data["course"])
+            )
+            return Response("Success", status=status.HTTP_200_OK)
+        return Response("Error", status=status.HTTP_404_NOT_FOUND)
+
+    def delete(self, request):
+        if request.data.get('course'):
+            cart = Cart.objects.get(user=request.user)
+            course = Сourses.objects.get(pk=request.data["course"])
+            if course in cart.courses.all():
+                cart.courses.remove(
+                        course
+                    )
+
+            return Response("Success", status=status.HTTP_200_OK)
+        return Response("Error", status=status.HTTP_404_NOT_FOUND)
