@@ -23,11 +23,15 @@ class СoursesListApiView(APIView):
 
     def get(self,  request):
         courses = Сourses.objects.all()
-        paginator = Paginator(courses, 5)
-        page_num = self.request.query_params.get('page')
+        count = courses.count()
+        paginator = Paginator(courses, 6)
+        page_num = self.request.query_params.get('page', 1)
 
         serializers = СoursesSerializer(paginator.page(page_num), many=True)
-        return Response(serializers.data)
+        return Response({
+            "count": count,
+            "courses": serializers.data
+        })
 
 
 class CategoryListApiView(APIView):
