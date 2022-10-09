@@ -58,7 +58,7 @@ class UserListView(APIView):
     def get(self, request):
         user = User.objects.all()
         paginator = Paginator(user, 5)
-        page_num = self.request.query_params.get('page')
+        page_num = self.request.query_params.get('page', 1)
 
         serializers = UserSerializer(paginator.page(page_num), many=True)
         return Response(serializers.data)
